@@ -7,7 +7,6 @@
     <style>
         :root {
             --wine-bg: #2b0303;
-            --wine-deep: #1a0000;
             --rose-gold: #e5b38a;
             --heart-red: #d00000;
             --soft-pink: #ffd1dc;
@@ -16,7 +15,7 @@
             --btn-gradient: linear-gradient(135deg, #d00000, #660000);
         }
 
-        /* HARD BACKGROUND LOCK */
+        /* HARD RESET & BACKGROUND FIX */
         html, body {
             margin: 0;
             padding: 0;
@@ -32,7 +31,6 @@
             cursor: none; 
             -webkit-tap-highlight-color: transparent;
             user-select: none;
-            -webkit-user-select: none;
             touch-action: none; 
         }
 
@@ -44,25 +42,24 @@
             justify-content: center;
         }
 
-        /* --- GOLD CURSOR AURA --- */
+        #bg-petals { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+        /* MOUSE AURA */
         #cursor-aura {
-            position: fixed; width: 500px; height: 500px;
+            position: fixed; width: 400px; height: 400px;
             background: radial-gradient(circle, rgba(229, 179, 138, 0.12) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none; z-index: 1;
             transform: translate(-50%, -50%); transition: opacity 0.3s;
         }
         #cursor-dot {
-            position: fixed; width: 10px; height: 10px; background: var(--rose-gold);
+            position: fixed; width: 8px; height: 8px; background: var(--rose-gold);
             border-radius: 50%; pointer-events: none; z-index: 10000;
             transform: translate(-50%, -50%); box-shadow: 0 0 15px var(--rose-gold);
         }
 
-        #bg-petals { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-
-        /* --- 3D ENVELOPE (LARGE) --- */
+        /* ENVELOPE SCALE FIX */
         #envelope-wrapper {
-            position: fixed; z-index: 5000; width: 420px; height: 300px;
-            transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; z-index: 5000; width: min(400px, 80vw); height: min(280px, 50vh);
             pointer-events: auto;
         }
         .envelope-body {
@@ -78,71 +75,74 @@
         }
         .wax-seal {
             position: absolute; top: 40%; left: 50%; transform: translateX(-50%);
-            width: 80px; height: 80px; background: #8b0000; border-radius: 50%;
-            z-index: 5003; box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-            display: flex; justify-content: center; align-items: center; border: 2px solid #5a0000;
+            width: 70px; height: 70px; background: #8b0000; border-radius: 50%;
+            z-index: 5003; display: flex; justify-content: center; align-items: center; border: 2px solid #5a0000;
         }
-        .wax-seal::after { content: "♥"; color: rgba(255,255,255,0.2); font-size: 35px; }
+        .wax-seal::after { content: "♥"; color: rgba(255,255,255,0.2); font-size: 30px; }
         #envelope-wrapper.open .envelope-flap { transform: translateY(-130%) rotate(-5deg); }
         #envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) translateY(-100%) scale(0); }
 
-        /* --- CONTENT LAYER --- */
-        .container { position: relative; z-index: 10; text-align: center; width: 90%; max-width: 900px; opacity: 0; transition: 1s; pointer-events: none; }
-        .headline { font-size: clamp(1.8rem, 6vw, 2.8rem); color: var(--rose-gold); font-style: italic; line-height: 1.4; min-height: 140px; }
+        /* CONTAINER LAYOUT */
+        .container { position: relative; z-index: 10; text-align: center; width: 90%; max-width: 800px; opacity: 0; transition: 1s; pointer-events: none; }
+        .container.active { pointer-events: auto; }
+        .headline { font-size: clamp(1.5rem, 5vw, 2.5rem); color: var(--rose-gold); font-style: italic; line-height: 1.4; min-height: 120px; }
 
         .heart-seal {
-            width: 100px; height: 100px; background: var(--heart-red);
+            width: 90px; height: 90px; background: var(--heart-red);
             position: relative; transform: rotate(-45deg);
-            box-shadow: 0 0 40px rgba(208, 0, 0, 0.6); animation: pulse 2s infinite; display: inline-block; margin-top: 50px;
+            box-shadow: 0 0 40px rgba(208, 0, 0, 0.6); animation: pulse 2s infinite; display: inline-block; margin-top: 30px;
             pointer-events: auto;
         }
-        .heart-seal::before, .heart-seal::after { content: ""; width: 100px; height: 100px; background: var(--heart-red); border-radius: 50%; position: absolute; }
-        .heart-seal::before { top: -50px; left: 0; }
-        .heart-seal::after { left: 50px; top: 0; }
+        .heart-seal::before, .heart-seal::after { content: ""; width: 90px; height: 90px; background: var(--heart-red); border-radius: 50%; position: absolute; }
+        .heart-seal::before { top: -45px; left: 0; }
+        .heart-seal::after { left: 45px; top: 0; }
 
-        /* --- QUESTION CARD --- */
+        /* QUESTION CARD */
         #question-card {
             display: none; opacity: 0; background: var(--glass); backdrop-filter: blur(30px);
-            border: 1px solid var(--gold-border); border-radius: 50px;
-            padding: 80px 50px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); transition: opacity 1.2s ease;
-            pointer-events: auto;
+            border: 1px solid var(--gold-border); border-radius: 40px;
+            padding: min(50px, 5vh) 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); transition: opacity 1.2s ease;
         }
-        .question-h2 { font-size: clamp(2rem, 6vw, 3rem); color: #fff; margin-bottom: 50px; font-style: italic; line-height: 1.3; }
+        .question-h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); color: #fff; margin-bottom: 30px; font-style: italic; }
 
-        .btn-container { display: flex; justify-content: center; align-items: center; gap: 40px; position: relative; min-height: 180px; width: 100%; }
+        .btn-container { display: flex; justify-content: center; align-items: center; gap: 30px; position: relative; min-height: 120px; }
         .btn {
-            padding: 22px 65px; border-radius: 60px; border: none; font-size: 1.5rem;
+            padding: 18px 50px; border-radius: 50px; border: none; font-size: 1.2rem;
             font-weight: 600; background: var(--btn-gradient); color: white;
             box-shadow: 0 10px 25px rgba(208, 0, 0, 0.3); transition: 0.3s; white-space: nowrap;
-            pointer-events: auto;
         }
 
-        /* --- SUCCESS OVERLAY --- */
+        /* SUCCESS OVERLAY - SCREEN HEIGHT FIX */
         #success-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #4d0000 0%, #1a0000 100%);
             z-index: 7000; display: none;
-            flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px;
-            pointer-events: auto;
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            padding: 20px;
         }
+
         .eternity-stamp {
-            width: 140px; height: 140px; border: 4px solid var(--rose-gold); border-radius: 50%;
+            width: 100px; height: 100px; border: 3px solid var(--rose-gold); border-radius: 50%;
             display: flex; align-items: center; justify-content: center; color: var(--rose-gold);
-            font-weight: bold; font-size: 1rem; text-transform: uppercase; letter-spacing: 3px;
-            transform: rotate(-15deg); margin-bottom: 20px; box-shadow: 0 0 20px var(--gold-border); opacity: 0;
+            font-weight: bold; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            transform: rotate(-15deg); margin-bottom: 15px; box-shadow: 0 0 20px var(--gold-border); opacity: 0;
         }
         .eternity-stamp.active { animation: stampIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
-        /* --- CARE PACKAGE CARDS --- */
-        .support-grid { display: flex; gap: 25px; margin-top: 50px; perspective: 1000px; }
+        /* MESSAGE CARDS - RESPONSIVE FIX */
+        .support-grid { display: flex; gap: 15px; margin-top: 20px; width: 100%; justify-content: center; max-width: 1000px; }
         .support-card {
             background: var(--glass); border: 1px solid var(--gold-border);
-            padding: 25px; border-radius: 20px; width: 230px; height: 320px;
+            padding: 15px; border-radius: 15px; 
+            width: min(180px, 30vw); 
+            height: min(240px, 35vh);
             display: flex; align-items: center; justify-content: center; text-align: center;
-            font-size: 1.2rem; color: var(--rose-gold); transition: 0.4s; line-height: 1.6;
-            pointer-events: auto;
+            font-size: clamp(0.7rem, 2vw, 0.95rem); color: var(--rose-gold); transition: 0.4s; line-height: 1.4;
         }
-        .support-card:hover { transform: translateY(-15px); background: rgba(229, 179, 138, 0.1); }
+        .support-card:hover { transform: translateY(-10px); background: rgba(229, 179, 138, 0.1); }
         .card-inner-text { opacity: 0; transition: 0.3s; pointer-events: none; }
         .support-card.revealed .card-inner-text { opacity: 1; }
         .support-card.revealed .card-placeholder { display: none; }
@@ -150,14 +150,22 @@
         #misclick-msg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: rgba(43, 3, 3, 0.98); border: 2px solid var(--rose-gold);
-            padding: 30px 50px; border-radius: 20px; color: var(--rose-gold);
-            z-index: 9999; display: none; backdrop-filter: blur(15px); text-align: center; font-size: 1.2rem;
+            padding: 20px 40px; border-radius: 15px; color: var(--rose-gold);
+            z-index: 9999; display: none; backdrop-filter: blur(15px); text-align: center;
         }
 
-        .cursor-blink { display: inline-block; width: 3px; height: 1.1em; background: var(--rose-gold); margin-left: 8px; animation: blink 0.8s infinite; vertical-align: middle;}
+        .cursor-blink { display: inline-block; width: 2px; height: 1.1em; background: var(--rose-gold); margin-left: 5px; animation: blink 0.8s infinite; vertical-align: middle;}
         @keyframes blink { 50% { opacity: 0; } }
-        @keyframes pulse { 0%, 100% { transform: rotate(-45deg) scale(1); } 50% { transform: rotate(-45deg) scale(1.15); } }
-        @keyframes stampIn { from { transform: scale(5) rotate(0deg); opacity: 0; } to { transform: scale(1) rotate(-15deg); opacity: 1; } }
+        @keyframes pulse { 0%, 100% { transform: rotate(-45deg) scale(1); } 50% { transform: rotate(-45deg) scale(1.1); } }
+        @keyframes stampIn { from { transform: scale(4) rotate(0deg); opacity: 0; } to { transform: scale(1) rotate(-15deg); opacity: 1; } }
+
+        /* Responsive Mobile Layout */
+        @media (max-height: 700px) {
+            .support-grid { gap: 10px; }
+            .support-card { height: min(180px, 30vh); }
+            .eternity-stamp { width: 80px; height: 80px; font-size: 0.6rem; }
+            .headline { font-size: 1.4rem; min-height: 80px; }
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -172,7 +180,7 @@
         <div class="envelope-flap"></div>
         <div class="envelope-body">
             <div class="wax-seal"></div>
-            <p style="color: var(--rose-gold); font-size: 1.1rem; letter-spacing: 3px; margin-top: 120px; font-weight: bold;">TEAR TO OPEN</p>
+            <p style="color: var(--rose-gold); font-size: 0.9rem; letter-spacing: 2px; margin-top: 100px; font-weight: bold;">TEAR TO OPEN</p>
         </div>
     </div>
 
@@ -197,10 +205,10 @@
     <!-- Success Screen -->
     <div id="success-overlay">
         <div class="eternity-stamp" id="stamp">Bounded<br>Forever</div>
-        <h1 style="font-size: 3.5rem; color: var(--rose-gold); font-style: italic; margin-bottom: 20px;">It is decided.</h1>
-        <p id="success-msg" style="font-size: 1.6rem; max-width: 80%; line-height: 1.6; color: #ffb7b7; min-height: 80px;"></p>
+        <h1 style="font-size: min(2.5rem, 8vw); color: var(--rose-gold); font-style: italic; margin-bottom: 10px;">It is decided.</h1>
+        <p id="success-msg" style="font-size: min(1.2rem, 4vw); max-width: 85%; line-height: 1.5; color: #ffb7b7; min-height: 60px;"></p>
         
-        <p style="font-size: 1rem; color: var(--rose-gold); letter-spacing: 4px; margin-top: 50px; text-transform: uppercase; font-weight: bold;">A Message For You • Click to Reveal</p>
+        <p style="font-size: 0.7rem; color: var(--rose-gold); letter-spacing: 3px; margin-top: 25px; text-transform: uppercase; font-weight: bold;">Click to Reveal Your Message</p>
         <div class="support-grid">
             <div class="support-card" onclick="revealCard(this)">
                 <span class="card-placeholder">✉️</span>
@@ -224,7 +232,7 @@
             if (keys.includes(e.key)) e.preventDefault();
         }, {passive: false});
 
-        // Cursor Aura
+        // Mouse Aura
         const aura = document.getElementById('cursor-aura');
         const dot = document.getElementById('cursor-dot');
         document.addEventListener('mousemove', (e) => {
@@ -232,7 +240,6 @@
             dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         });
 
-        // Typing logic
         let typingActive = false;
         async function humanType(elementId, text) {
             if (typingActive) return;
@@ -240,13 +247,13 @@
             const el = document.getElementById(elementId); el.innerHTML = "";
             for (let i = 0; i < text.length; i++) {
                 if (Math.random() < 0.03 && i > 5) { 
-                    el.innerHTML += "z"; await new Promise(r => setTimeout(r, 150));
-                    el.innerHTML = el.innerHTML.slice(0, -1); await new Promise(r => setTimeout(r, 200));
+                    el.innerHTML += "z"; await new Promise(r => setTimeout(r, 100));
+                    el.innerHTML = el.innerHTML.slice(0, -1); await new Promise(r => setTimeout(r, 100));
                 }
                 el.innerHTML += text[i];
-                let delay = Math.floor(Math.random() * 60) + 40;
-                if (text[i] === ".") delay = 1000;
-                else if (text[i] === ",") delay = 500;
+                let delay = Math.floor(Math.random() * 50) + 30;
+                if (text[i] === ".") delay = 700;
+                else if (text[i] === ",") delay = 350;
                 await new Promise(r => setTimeout(r, delay));
             }
             typingActive = false;
@@ -256,13 +263,13 @@
         const mainContainer = document.getElementById('mainContainer');
 
         envelope.onclick = (e) => {
-            e.stopPropagation();
             envelope.classList.add('open');
             setTimeout(() => {
                 envelope.style.opacity = '0';
                 setTimeout(() => {
                     envelope.style.display = 'none';
                     mainContainer.style.opacity = '1';
+                    mainContainer.classList.add('active');
                     initIntro();
                 }, 1000);
             }, 1200);
@@ -276,8 +283,7 @@
             reveal.style.pointerEvents = 'auto';
         }
 
-        document.getElementById('heartAction').onclick = (e) => {
-            e.stopPropagation();
+        document.getElementById('heartAction').onclick = () => {
             document.getElementById('intro-section').style.opacity = "0";
             setTimeout(async () => {
                 document.getElementById('intro-section').style.display = "none";
@@ -287,54 +293,33 @@
             }, 800);
         };
 
-        // --- IMPROVED SMART BOUNDARY RUNAWAY ---
+        // SAFE RUNAWAY NO
         const noBtn = document.getElementById('no-btn');
         let moves = 0;
-
         const runaway = (e) => {
             if (e) e.stopPropagation();
             noBtn.style.position = 'fixed';
-            noBtn.style.zIndex = '10000';
-            
-            // Recalculate size dynamically every move
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
-            
-            // Set safety padding (avoiding edges and potential status bars)
-            const padding = 80; 
-
-            // Calculate available screen area
-            const maxX = window.innerWidth - btnWidth - padding;
-            const maxY = window.innerHeight - btnHeight - padding;
-
-            // Generate coordinates within strictly safe limits
-            const safeX = Math.max(padding / 2, Math.random() * maxX);
-            const safeY = Math.max(padding / 2, Math.random() * maxY);
-
-            noBtn.style.left = `${safeX}px`;
-            noBtn.style.top = `${safeY}px`;
-            
+            const margin = 70;
+            const maxX = window.innerWidth - noBtn.offsetWidth - margin;
+            const maxY = window.innerHeight - noBtn.offsetHeight - margin;
+            noBtn.style.left = Math.max(margin, Math.random() * maxX) + 'px';
+            noBtn.style.top = Math.max(margin, Math.random() * maxY) + 'px';
             moves++;
             if(moves === 3) noBtn.innerText = "Wait... why? 🥺";
             if(moves === 7) noBtn.innerText = "Pretty please? ✨";
         };
-
         noBtn.onmouseover = runaway;
-        noBtn.addEventListener('touchstart', (e) => { 
-            e.preventDefault(); e.stopPropagation(); runaway(); 
-        }, {passive: false});
+        noBtn.addEventListener('touchstart', runaway);
 
-        noBtn.onclick = (e) => {
-            e.stopPropagation();
+        noBtn.onclick = () => {
             const m = document.getElementById('misclick-msg');
             m.style.display = 'block'; runaway();
             setTimeout(() => m.style.display = 'none', 2000);
         };
 
-        document.getElementById('yes-btn').onclick = async (e) => {
-            e.stopPropagation();
+        document.getElementById('yes-btn').onclick = async () => {
             document.getElementById('success-overlay').style.display = 'flex';
-            setTimeout(() => { document.getElementById('stamp').classList.add('active'); }, 300);
+            setTimeout(() => document.getElementById('stamp').classList.add('active'), 300);
             await humanType('success-msg', "Sorry love, this has been saved. You cannot take it back now. You are bounded to me for eternity. ❤️");
         };
 
@@ -344,8 +329,8 @@
             const p = document.createElement('div');
             p.innerHTML = '🌸'; p.style.position = 'fixed'; p.style.color = 'rgba(255,182,193,0.3)';
             p.style.left = Math.random() * 100 + 'vw'; p.style.top = '-5vh';
-            p.style.fontSize = (Math.random() * 20 + 20) + 'px'; p.style.zIndex = '0';
-            const dur = Math.random() * 6 + 6;
+            p.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            const dur = Math.random() * 5 + 5;
             p.style.transition = `transform ${dur}s linear, opacity ${dur}s`;
             document.getElementById('bg-petals').appendChild(p);
             setTimeout(() => {
@@ -354,7 +339,7 @@
             }, 100);
             setTimeout(() => p.remove(), dur * 1000);
         }
-        setInterval(createPetal, 450);
+        setInterval(createPetal, 500);
     </script>
 </body>
 </html>
