@@ -27,115 +27,121 @@
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* --- FEATURE: GOLD CURSOR AURA --- */
+        /* --- GOLD CURSOR AURA --- */
         #cursor-aura {
-            position: fixed; width: 450px; height: 450px;
-            background: radial-gradient(circle, rgba(229, 179, 138, 0.1) 0%, transparent 70%);
+            position: fixed; width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(229, 179, 138, 0.12) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none; z-index: 1;
             transform: translate(-50%, -50%); transition: opacity 0.3s;
         }
         #cursor-dot {
-            position: fixed; width: 6px; height: 6px; background: var(--rose-gold);
+            position: fixed; width: 10px; height: 10px; background: var(--rose-gold);
             border-radius: 50%; pointer-events: none; z-index: 10000;
             transform: translate(-50%, -50%); box-shadow: 0 0 15px var(--rose-gold);
         }
 
-        /* --- FEATURE: ROSE PETAL RAIN --- */
         #bg-petals { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 
-        /* --- 3D INTERACTIVE ENVELOPE --- */
+        /* --- 3D ENVELOPE (INCREASED SIZE) --- */
         #envelope-wrapper {
-            position: fixed; z-index: 5000; width: 320px; height: 220px;
+            position: fixed; z-index: 5000; width: 420px; height: 300px;
             transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .envelope-body {
             position: relative; width: 100%; height: 100%; background: #4a0303;
-            border: 1px solid var(--rose-gold); box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            border: 2px solid var(--rose-gold); box-shadow: 0 40px 80px rgba(0,0,0,0.9);
             display: flex; justify-content: center; align-items: center;
         }
         .envelope-flap {
             position: absolute; top: 0; left: 0; width: 100%; height: 50%;
-            background: #5a0404; border: 1px solid var(--rose-gold); z-index: 5002;
+            background: #5a0404; border: 2px solid var(--rose-gold); z-index: 5002;
             transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
             clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 98% 100%, 95% 92%, 92% 99%, 88% 91%, 84% 98%, 80% 92%, 75% 99%, 71% 91%, 67% 98%, 62% 91%, 58% 99%, 54% 91%, 50% 98%, 46% 91%, 42% 99%, 38% 91%, 33% 98%, 29% 91%, 25% 99%, 21% 91%, 17% 98%, 13% 91%, 9% 99%, 5% 91%, 2% 98%, 0% 90%);
         }
         .wax-seal {
             position: absolute; top: 40%; left: 50%; transform: translateX(-50%);
-            width: 60px; height: 60px; background: #8b0000; border-radius: 50%;
-            z-index: 5003; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            display: flex; justify-content: center; align-items: center; border: 1px solid #5a0000;
+            width: 80px; height: 80px; background: #8b0000; border-radius: 50%;
+            z-index: 5003; box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            display: flex; justify-content: center; align-items: center; border: 2px solid #5a0000;
         }
-        .wax-seal::after { content: "♥"; color: rgba(255,255,255,0.2); font-size: 25px; }
+        .wax-seal::after { content: "♥"; color: rgba(255,255,255,0.2); font-size: 35px; }
         
         #envelope-wrapper.open .envelope-flap { transform: translateY(-130%) rotate(-5deg); }
         #envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) translateY(-100%) scale(0); }
 
         /* --- CONTENT LAYER --- */
-        .container { position: relative; z-index: 10; text-align: center; width: 90%; max-width: 700px; opacity: 0; transition: 1s; }
-        .headline { font-size: clamp(1.3rem, 5vw, 2rem); color: var(--rose-gold); font-style: italic; line-height: 1.6; min-height: 100px; }
+        .container { position: relative; z-index: 10; text-align: center; width: 90%; max-width: 900px; opacity: 0; transition: 1s; }
+        .headline { font-size: clamp(1.8rem, 6vw, 2.8rem); color: var(--rose-gold); font-style: italic; line-height: 1.4; min-height: 140px; }
 
         .heart-seal {
-            width: 70px; height: 70px; background: var(--heart-red);
+            width: 90px; height: 90px; background: var(--heart-red);
             position: relative; transform: rotate(-45deg);
-            box-shadow: 0 0 30px rgba(208, 0, 0, 0.5); animation: pulse 2s infinite; display: inline-block; margin-top: 40px;
+            box-shadow: 0 0 40px rgba(208, 0, 0, 0.6); animation: pulse 2s infinite; display: inline-block; margin-top: 50px;
         }
-        .heart-seal::before, .heart-seal::after { content: ""; width: 70px; height: 70px; background: var(--heart-red); border-radius: 50%; position: absolute; }
-        .heart-seal::before { top: -35px; left: 0; }
-        .heart-seal::after { left: 35px; top: 0; }
-        @keyframes pulse { 0%, 100% { transform: rotate(-45deg) scale(1); } 50% { transform: rotate(-45deg) scale(1.15); } }
+        .heart-seal::before, .heart-seal::after { content: ""; width: 90px; height: 90px; background: var(--heart-red); border-radius: 50%; position: absolute; }
+        .heart-seal::before { top: -45px; left: 0; }
+        .heart-seal::after { left: 45px; top: 0; }
 
-        /* --- QUESTION CARD --- */
+        /* --- QUESTION CARD (INCREASED SIZE) --- */
         #question-card {
-            display: none; opacity: 0; background: var(--glass); backdrop-filter: blur(25px);
-            border: 1px solid var(--gold-border); border-radius: 40px;
-            padding: 50px 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); transition: opacity 1.2s ease;
+            display: none; opacity: 0; background: var(--glass); backdrop-filter: blur(30px);
+            border: 1px solid var(--gold-border); border-radius: 50px;
+            padding: 80px 50px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); transition: opacity 1.2s ease;
         }
+        .question-h2 { font-size: clamp(2rem, 6vw, 3rem); color: #fff; margin-bottom: 50px; font-style: italic; line-height: 1.3; }
 
-        .btn-container { display: flex; justify-content: center; align-items: center; gap: 20px; position: relative; min-height: 100px; margin-top: 20px;}
+        .btn-container { display: flex; justify-content: center; align-items: center; gap: 40px; position: relative; min-height: 120px; }
         .btn {
-            padding: 15px 40px; border-radius: 50px; border: none; font-size: 1.1rem;
+            padding: 20px 60px; border-radius: 60px; border: none; font-size: 1.4rem;
             font-weight: 600; background: var(--btn-gradient); color: white;
-            box-shadow: 0 8px 20px rgba(208, 0, 0, 0.2); transition: 0.3s; white-space: nowrap;
+            box-shadow: 0 10px 25px rgba(208, 0, 0, 0.3); transition: 0.3s; white-space: nowrap;
         }
 
         /* --- SUCCESS OVERLAY --- */
         #success-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--wine-bg); z-index: 7000; display: none;
-            flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;
+            flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px;
         }
-
         .eternity-stamp {
-            width: 100px; height: 100px; border: 3px solid var(--rose-gold); border-radius: 50%;
+            width: 140px; height: 140px; border: 4px solid var(--rose-gold); border-radius: 50%;
             display: flex; align-items: center; justify-content: center; color: var(--rose-gold);
-            font-weight: bold; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
-            transform: rotate(-15deg); margin-bottom: 20px; box-shadow: 0 0 20px var(--gold-border);
+            font-weight: bold; font-size: 1rem; text-transform: uppercase; letter-spacing: 3px;
+            transform: rotate(-15deg); margin-bottom: 30px; box-shadow: 0 0 30px var(--gold-border);
             opacity: 0;
         }
         .eternity-stamp.active { animation: stampIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes stampIn { from { transform: scale(5) rotate(0deg); opacity: 0; } to { transform: scale(1) rotate(-15deg); opacity: 1; } }
 
-        /* --- DIGITAL CARE PACKAGE CARDS --- */
-        .support-grid { display: flex; gap: 15px; margin-top: 30px; perspective: 1000px; }
+        /* --- MESSAGE CARDS (INCREASED SIZE) --- */
+        .support-grid { display: flex; gap: 25px; margin-top: 50px; perspective: 1000px; }
         .support-card {
             background: var(--glass); border: 1px solid var(--gold-border);
-            padding: 15px; border-radius: 15px; width: 140px; height: 180px;
+            padding: 25px; border-radius: 20px; width: 220px; height: 280px;
             display: flex; align-items: center; justify-content: center; text-align: center;
-            font-size: 0.75rem; color: var(--rose-gold); transition: 0.4s; line-height: 1.5;
+            font-size: 1.1rem; color: var(--rose-gold); transition: 0.4s; line-height: 1.6;
         }
-        .support-card:hover { transform: translateY(-10px); background: rgba(229, 179, 138, 0.1); }
+        .support-card:hover { transform: translateY(-15px); background: rgba(229, 179, 138, 0.1); }
         .card-inner-text { opacity: 0; transition: 0.3s; pointer-events: none; }
         .support-card.revealed .card-inner-text { opacity: 1; }
-        .support-card.revealed .card-placeholder { display: none; }
+        .support-card.revealed .card-placeholder { display: none; font-size: 3rem; }
 
         .music-btn {
-            position: fixed; bottom: 30px; left: 30px; z-index: 100;
-            background: var(--glass); border: 1px solid var(--rose-gold);
-            padding: 8px 15px; border-radius: 20px; color: var(--rose-gold); font-size: 0.6rem; letter-spacing: 2px;
+            position: fixed; bottom: 40px; left: 40px; z-index: 100;
+            background: var(--glass); border: 2px solid var(--rose-gold);
+            padding: 12px 25px; border-radius: 30px; color: var(--rose-gold); font-size: 0.9rem; letter-spacing: 2px;
         }
 
-        .cursor-blink { display: inline-block; width: 2px; height: 1em; background: var(--rose-gold); margin-left: 5px; animation: blink 0.8s infinite; vertical-align: middle;}
+        #misclick-msg {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(43, 3, 3, 0.98); border: 2px solid var(--rose-gold);
+            padding: 30px 50px; border-radius: 20px; color: var(--rose-gold);
+            z-index: 9999; display: none; backdrop-filter: blur(15px); text-align: center; font-size: 1.2rem;
+        }
+
+        .cursor-blink { display: inline-block; width: 3px; height: 1.1em; background: var(--rose-gold); margin-left: 8px; animation: blink 0.8s infinite; vertical-align: middle;}
         @keyframes blink { 50% { opacity: 0; } }
+        @keyframes pulse { 0%, 100% { transform: rotate(-45deg) scale(1); } 50% { transform: rotate(-45deg) scale(1.15); } }
+        @keyframes stampIn { from { transform: scale(5) rotate(0deg); opacity: 0; } to { transform: scale(1) rotate(-15deg); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -144,14 +150,14 @@
     <div id="cursor-dot"></div>
     <button class="music-btn" id="musicToggle">AUDIO: OFF</button>
     <div id="bg-petals"></div>
-    <div id="misclick-msg" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); display:none; background:rgba(0,0,0,0.95); padding:20px; border:1px solid var(--rose-gold); z-index:9999; color:var(--rose-gold); border-radius:15px; text-align:center;">I think you misclicked, try again... 🌹</div>
+    <div id="misclick-msg">I think you misclicked, try again... 🌹</div>
 
     <!-- 3D ENVELOPE -->
     <div id="envelope-wrapper">
         <div class="envelope-flap"></div>
         <div class="envelope-body">
             <div class="wax-seal"></div>
-            <p style="color: var(--rose-gold); font-size: 0.7rem; letter-spacing: 2px; margin-top: 80px;">TEAR TO OPEN</p>
+            <p style="color: var(--rose-gold); font-size: 1rem; letter-spacing: 3px; margin-top: 120px; font-weight: bold;">TEAR TO OPEN</p>
         </div>
     </div>
 
@@ -165,7 +171,7 @@
         </div>
 
         <div id="question-card">
-            <h2 id="type-q" style="min-height: 80px; margin-bottom: 20px; font-size: 1.6rem; font-style: italic;"></h2>
+            <h2 id="type-q" class="question-h2"></h2>
             <div class="btn-container" id="btn-wrapper">
                 <button class="btn" id="yes-btn">Yes, I will ❤️</button>
                 <button class="btn" id="no-btn">No</button>
@@ -176,10 +182,10 @@
     <!-- Success Screen -->
     <div id="success-overlay">
         <div class="eternity-stamp" id="stamp">Bounded<br>Forever</div>
-        <h1 style="font-size: 2.2rem; color: var(--rose-gold); font-style: italic; margin-bottom: 10px;">It is decided.</h1>
-        <p id="success-msg" style="font-size: 1rem; max-width: 85%; line-height: 1.6; color: #ffb7b7; min-height: 60px;"></p>
+        <h1 style="font-size: 3.5rem; color: var(--rose-gold); font-style: italic; margin-bottom: 20px;">It is decided.</h1>
+        <p id="success-msg" style="font-size: 1.5rem; max-width: 80%; line-height: 1.6; color: #ffb7b7; min-height: 80px;"></p>
         
-        <p style="font-size: 0.65rem; color: var(--rose-gold); letter-spacing: 2px; margin-top: 30px; text-transform: uppercase;">A Message For You • Click to Reveal</p>
+        <p style="font-size: 1rem; color: var(--rose-gold); letter-spacing: 4px; margin-top: 50px; text-transform: uppercase; font-weight: bold;">A Message For You • Click to Reveal</p>
         <div class="support-grid">
             <div class="support-card" onclick="revealCard(this)">
                 <span class="card-placeholder">✉️</span>
@@ -208,19 +214,17 @@
             dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         });
 
-        // --- HUMAN TYPEWRITER ENGINE ---
         async function humanType(elementId, text) {
             const el = document.getElementById(elementId); el.innerHTML = "";
             for (let i = 0; i < text.length; i++) {
-                // Occasional Typo Simulation
                 if (Math.random() < 0.03 && i > 5) { 
                     el.innerHTML += "z"; await new Promise(r => setTimeout(r, 150));
                     el.innerHTML = el.innerHTML.slice(0, -1); await new Promise(r => setTimeout(r, 200));
                 }
                 el.innerHTML += text[i];
                 let delay = Math.floor(Math.random() * 60) + 40;
-                if (text[i] === ".") delay = 900;
-                else if (text[i] === ",") delay = 450;
+                if (text[i] === ".") delay = 1000;
+                else if (text[i] === ",") delay = 500;
                 await new Promise(r => setTimeout(r, delay));
             }
         }
@@ -252,22 +256,37 @@
                 document.getElementById('intro-section').style.display = "none";
                 document.getElementById('question-card').style.display = "block";
                 setTimeout(() => document.getElementById('question-card').style.opacity = "1", 50);
-                // UPDATED QUESTION
                 await humanType('type-q', "Can you fill the missing piece? Will you be my Valentine?");
             }, 800);
         };
 
         const noBtn = document.getElementById('no-btn');
         let moves = 0;
+
         const runaway = () => {
             noBtn.style.position = 'fixed';
-            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            noBtn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            noBtn.style.zIndex = '10000';
+            
+            // Calculate safe boundaries (Window size - button size - padding)
+            const padding = 40;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            // Ensure values are not negative
+            const safeX = Math.max(padding, Math.random() * maxX);
+            const safeY = Math.max(padding, Math.random() * maxY);
+
+            noBtn.style.left = `${safeX}px`;
+            noBtn.style.top = `${safeY}px`;
+            
             moves++;
             if(moves === 3) noBtn.innerText = "Wait... why? 🥺";
             if(moves === 7) noBtn.innerText = "Pretty please? ✨";
         };
+
         noBtn.onmouseover = runaway;
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); runaway(); });
+
         noBtn.onclick = () => {
             const m = document.getElementById('misclick-msg');
             m.style.display = 'block'; runaway();
@@ -279,7 +298,6 @@
             setTimeout(() => {
                 document.getElementById('stamp').classList.add('active');
             }, 300);
-            // FINAL SUCCESS MESSAGE
             await humanType('success-msg', "Sorry love, this has been saved. You cannot take it back now. You are bounded to me for eternity. ❤️");
         };
 
@@ -291,7 +309,7 @@
             const p = document.createElement('div');
             p.innerHTML = '🌸'; p.style.position = 'fixed'; p.style.color = 'rgba(255,182,193,0.3)';
             p.style.left = Math.random() * 100 + 'vw'; p.style.top = '-5vh';
-            p.style.fontSize = (Math.random() * 15 + 10) + 'px'; p.style.zIndex = '0';
+            p.style.fontSize = (Math.random() * 20 + 15) + 'px'; p.style.zIndex = '0';
             const dur = Math.random() * 6 + 6;
             p.style.transition = `transform ${dur}s linear, opacity ${dur}s`;
             document.getElementById('bg-petals').appendChild(p);
